@@ -5,6 +5,7 @@ import com.blade.ioc.annotation.Bean;
 import com.blade.kit.EncryptKit;
 import com.blade.kit.StringKit;
 import com.blade.validator.Validators;
+import io.github.biezhi.anima.core.AnimaQuery;
 import io.github.biezhi.anima.enums.OrderBy;
 import io.github.biezhi.anima.page.Page;
 import io.github.biezhi.lattice.example.enums.MenuType;
@@ -88,9 +89,12 @@ public class UserService {
         update().from(SysUser.class).set(SysUser::getPassword, newPwd).where(SysUser::getUserId, sysUser.getUserId()).execute();
     }
 
-    public Page<SysUser> findUsers(UserParam userParam) {
-
-        return null;
+    public Page<SysUser> findUsers(UserParam param) {
+        AnimaQuery<SysUser> query = select().from(SysUser.class);
+        if (StringKit.isNotEmpty(param.getUsername())) {
+            query.and(SysUser::getUsername, param.getUsername());
+        }
+        return query.page(param.getPageNumber(), param.getPageSize());
     }
 
     public void updateStatus(UserStatus userStatus, List<Long> ids) {

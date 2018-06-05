@@ -2,6 +2,7 @@ package io.github.biezhi.lattice.example.controller;
 
 import com.blade.mvc.WebContext;
 import io.github.biezhi.lattice.AuthInfo;
+import io.github.biezhi.lattice.Constant;
 import io.github.biezhi.lattice.example.model.SysUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class BaseController {
 
     protected SysUser loginUser() {
-        AuthInfo authInfo = WebContext.request().session().attribute("LATTICE");
+        AuthInfo authInfo = WebContext.request().session().attribute(Constant.DEFAULT_SESSION_KEY);
         return (SysUser) Optional.ofNullable(authInfo).map(AuthInfo::getUser).orElse(null);
     }
 

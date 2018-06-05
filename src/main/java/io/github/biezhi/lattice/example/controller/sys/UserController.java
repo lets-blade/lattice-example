@@ -28,8 +28,7 @@ public class UserController extends BaseController {
     @Inject
     private UserService userService;
 
-
-    @GetRoute("list")
+    @PostRoute("list")
     public Page<SysUser> list(UserParam userParam) {
         return userService.findUsers(userParam);
     }
@@ -38,14 +37,6 @@ public class UserController extends BaseController {
     public RestResponse info() {
         return RestResponse.ok(this.loginUser());
     }
-
-//    @GetRoute("menus")
-//    public Map<String, Object> menus() {
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("menuList", userService.listMenus(this.userId()));
-//        map.put("code", 0);
-//        return map;
-//    }
 
     @GetRoute("menus")
     public RestResponse menus() {

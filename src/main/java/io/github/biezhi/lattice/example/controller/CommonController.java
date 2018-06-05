@@ -10,6 +10,7 @@ import com.blade.mvc.ui.RestResponse;
 import io.github.biezhi.lattice.Constant;
 import io.github.biezhi.lattice.Lattice;
 import io.github.biezhi.lattice.LoginToken;
+import io.github.biezhi.lattice.example.annotation.SysLog;
 import io.github.biezhi.lattice.exception.AuthenticationException;
 import io.github.biezhi.lattice.exception.DisabledAccountException;
 import io.github.biezhi.lattice.exception.UnknownAccountException;
@@ -38,6 +39,7 @@ public class CommonController {
         return RestResponse.ok();
     }
 
+    @SysLog("登录系统")
     @PostRoute("login")
     @JSON
     public RestResponse doLogin(LoginToken loginToken) {

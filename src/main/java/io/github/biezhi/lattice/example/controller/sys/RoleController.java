@@ -47,7 +47,7 @@ public class RoleController extends BaseController {
         return RestResponse.ok(sysRole.update());
     }
 
-    @GetRoute("list")
+    @PostRoute("list")
     public Page<SysRole> list(RoleParam roleParam) {
         return roleService.findRoles(roleParam);
     }

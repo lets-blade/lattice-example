@@ -1,5 +1,6 @@
 package io.github.biezhi.lattice.example.model;
 
+import com.blade.kit.json.JsonFormat;
 import io.github.biezhi.anima.Model;
 import io.github.biezhi.anima.annotation.Table;
 import lombok.Data;
@@ -19,6 +20,10 @@ public class SysRole extends Model {
     private String        roleSign;
     private String        remark;
     private Long          createdId;
+
+    @JsonFormat("yyyy/MM/dd HH:mm:ss")
     private LocalDateTime createdTime;
+
+    @JsonFormat("yyyy/MM/dd HH:mm:ss")
     private LocalDateTime modifiedTime;
 }

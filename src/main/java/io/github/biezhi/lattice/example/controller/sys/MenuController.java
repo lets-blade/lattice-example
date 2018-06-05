@@ -42,8 +42,8 @@ public class MenuController extends BaseController {
     }
 
     @GetRoute("list")
-    public RestResponse list() {
-        return RestResponse.ok(select().from(SysMenu.class).all());
+    public List<SysMenu> list() {
+        return select().from(SysMenu.class).all();
     }
 
     @PostRoute("remove")
