@@ -21,8 +21,7 @@ public class SysUser extends Model {
     private String        password;
     private String        email;
     private String        mobile;
-    @EnumMapping(EnumMapping.ORDINAL)
-    private UserStatus    status;
+    private Integer       status;
     private String        remark;
     private Long          createdId;
     private LocalDateTime createdTime;

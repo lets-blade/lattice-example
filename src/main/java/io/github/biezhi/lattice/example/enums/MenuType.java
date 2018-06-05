@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public enum MenuType {
 
-    DIR(0), MENU(1), BUTTON(2);
+    CATALOG(0), MENU(1), BUTTON(2);
 
     private int type;
 

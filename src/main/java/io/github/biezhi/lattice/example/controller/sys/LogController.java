@@ -29,7 +29,7 @@ public class LogController extends BaseController {
     @Inject
     private LogService logService;
 
-    @GetRoute("list")
+    @PostRoute("list")
     public Page<SysLog> list(LogParam logParam) {
         return logService.findLogs(logParam);
     }

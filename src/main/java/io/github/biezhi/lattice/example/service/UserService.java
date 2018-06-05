@@ -3,13 +3,17 @@ package io.github.biezhi.lattice.example.service;
 import com.blade.exception.ValidatorException;
 import com.blade.ioc.annotation.Bean;
 import com.blade.kit.EncryptKit;
+import com.blade.kit.StringKit;
 import com.blade.validator.Validators;
+import io.github.biezhi.anima.enums.OrderBy;
 import io.github.biezhi.anima.page.Page;
+import io.github.biezhi.lattice.example.enums.MenuType;
 import io.github.biezhi.lattice.example.enums.UserStatus;
 import io.github.biezhi.lattice.example.model.*;
 import io.github.biezhi.lattice.example.params.UpdatePwdParam;
 import io.github.biezhi.lattice.example.params.UserParam;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +41,7 @@ public class UserService {
                     .where(SysRole::getRoleId).in(roleIds)
                     .all();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public List<SysMenu> findUserMenus(Long userId) {
@@ -52,12 +56,13 @@ public class UserService {
             return select().from(SysMenu.class).where(SysMenu::getMenuId).in(menuIds).all();
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     public Set<String> findUserPerms(Long userId) {
         return findUserMenus(userId).stream()
                 .map(SysMenu::getPerms)
+                .filter(StringKit::isNotEmpty)
                 .map(perms -> perms.split(","))
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toSet());
@@ -66,7 +71,8 @@ public class UserService {
     public void updatePwd(UpdatePwdParam updatePwdParam) {
         Validators.notEmpty().test(updatePwdParam.getPwd()).throwIfInvalid("旧密码");
         Validators.notEmpty().test(updatePwdParam.getNewPwd()).throwIfInvalid("新密码");
-        Validators.lessThan(6).test(updatePwdParam.getNewPwd()).throwIfInvalid("新密码");
+
+        Validators.moreThan(6).test(updatePwdParam.getNewPwd()).throwIfInvalid("新密码");
 
         if (updatePwdParam.getPwd().equals(updatePwdParam.getNewPwd())) {
             throw new ValidatorException("新密码和旧密码相同");
@@ -91,6 +97,56 @@ public class UserService {
         for (Long id : ids) {
             update().from(SysUser.class).set(SysUser::getStatus, userStatus.getStatus()).where(SysUser::getUserId, id);
         }
+    }
+
+    public List<SysMenu> listMenus(Long userId) {
+        List<Long> menuIdList = findUserMenus(userId).stream().map(SysMenu::getMenuId).collect(Collectors.toList());
+        return getAllMenuList(menuIdList);
+    }
+
+    /**
+     * 获取所有菜单列表
+     */
+    private List<SysMenu> getAllMenuList(List<Long> menuIdList) {
+        //查询根菜单列表
+        List<SysMenu> menuList = listParentId(0L, menuIdList);
+        //递归获取子菜单
+        getMenuTreeList(menuList, menuIdList);
+
+        return menuList;
+    }
+
+    /**
+     * 递归
+     */
+    private List<SysMenu> getMenuTreeList(List<SysMenu> menuList, List<Long> menuIdList) {
+        List<SysMenu> subMenuList = new ArrayList<SysMenu>();
+
+        for (SysMenu entity : menuList) {
+            if (entity.getType() == MenuType.CATALOG.getType()) {//目录
+                entity.setList(getMenuTreeList(listParentId(entity.getMenuId(), menuIdList), menuIdList));
+            }
+            subMenuList.add(entity);
+        }
+        return subMenuList;
+    }
+
+    public List<SysMenu> listParentId(Long parentId, List<Long> menuIdList) {
+        List<SysMenu> menuList = select().from(SysMenu.class)
+                .where(SysMenu::getParentId, parentId)
+                .order(SysMenu::getOrderNum, OrderBy.DESC).all();
+
+        if (menuIdList == null) {
+            return menuList;
+        }
+
+        List<SysMenu> userMenuList = new ArrayList<>();
+        for (SysMenu menu : menuList) {
+            if (menuIdList.contains(menu.getMenuId())) {
+                userMenuList.add(menu);
+            }
+        }
+        return userMenuList;
     }
 
 }

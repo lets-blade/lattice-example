@@ -2,9 +2,12 @@ package io.github.biezhi.lattice.example.controller;
 
 import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.GetRoute;
+import com.blade.mvc.annotation.JSON;
 import com.blade.mvc.annotation.Path;
 import com.blade.mvc.annotation.PostRoute;
+import com.blade.mvc.http.Session;
 import com.blade.mvc.ui.RestResponse;
+import io.github.biezhi.lattice.Constant;
 import io.github.biezhi.lattice.Lattice;
 import io.github.biezhi.lattice.LoginToken;
 import io.github.biezhi.lattice.exception.AuthenticationException;
@@ -28,7 +31,15 @@ public class CommonController {
         return "login.html";
     }
 
+    @PostRoute("logout")
+    @JSON
+    public RestResponse logout(Session session) {
+        session.remove(Constant.DEFAULT_SESSION_KEY);
+        return RestResponse.ok();
+    }
+
     @PostRoute("login")
+    @JSON
     public RestResponse doLogin(LoginToken loginToken) {
         try {
             lattice.login(loginToken);

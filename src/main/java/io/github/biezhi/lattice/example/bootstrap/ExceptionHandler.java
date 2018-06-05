@@ -20,14 +20,8 @@ public class ExceptionHandler extends DefaultExceptionHandler {
     @Override
     public void handle(Exception e) {
         if (ValidatorException.class.isInstance(e)) {
-            Request  request  = WebContext.request();
             Response response = WebContext.response();
-            if (request.isAjax()) {
-                response.json(RestResponse.fail(e.getMessage()));
-            } else {
-                log.error("渲染出现异常", e);
-                response.render("/error/500.html");
-            }
+            response.json(RestResponse.fail(e.getMessage()));
         } else {
             super.handle(e);
         }

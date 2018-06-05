@@ -4,6 +4,7 @@ import com.blade.Blade;
 import com.blade.event.BeanProcessor;
 import com.blade.ioc.annotation.Bean;
 import com.blade.mvc.view.template.JetbrickTemplateEngine;
+import com.blade.validator.Validators;
 import io.github.biezhi.anima.Anima;
 import com.alibaba.druid.pool.DruidDataSource;
 import io.github.biezhi.lattice.Lattice;
@@ -16,13 +17,13 @@ public class Bootstrap implements BeanProcessor {
         Lattice lattice = new Lattice();
         lattice.loginUrl("/login").unauthorizedUrl("/unauthorized");
 
-        lattice.realm(new JdbcRealm());
-
         blade.register(lattice);
     }
 
     @Override
     public void processor(Blade blade) {
+
+        Validators.useChinese();
 
         blade.templateEngine(new JetbrickTemplateEngine());
 

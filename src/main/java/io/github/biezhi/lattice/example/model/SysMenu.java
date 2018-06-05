@@ -7,6 +7,7 @@ import io.github.biezhi.lattice.example.enums.MenuType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author biezhi
@@ -21,10 +22,12 @@ public class SysMenu extends Model {
     private String        name;
     private String        url;
     private String        perms;
-    @EnumMapping(EnumMapping.ORDINAL)
-    private MenuType      type;
+    private Integer       type;
     private String        icon;
     private Integer       orderNum;
     private LocalDateTime createdTime;
     private LocalDateTime modifiedTime;
+
+    // sub menus
+    private List<SysMenu> list;
 }
