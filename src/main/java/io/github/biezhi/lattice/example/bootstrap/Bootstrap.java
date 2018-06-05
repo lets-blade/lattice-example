@@ -1,7 +1,6 @@
-package io.github.biezhi.lattice.example.config;
+package io.github.biezhi.lattice.example.bootstrap;
 
 import com.blade.Blade;
-import com.blade.Environment;
 import com.blade.event.BeanProcessor;
 import com.blade.ioc.annotation.Bean;
 import com.blade.mvc.view.template.JetbrickTemplateEngine;

@@ -1,4 +1,4 @@
-package io.github.biezhi.lattice.example.config;
+package io.github.biezhi.lattice.example.bootstrap;
 
 import com.blade.ioc.annotation.Bean;
 import com.blade.ioc.annotation.Inject;
