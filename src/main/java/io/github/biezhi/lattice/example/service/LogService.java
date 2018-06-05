@@ -7,9 +7,6 @@ import io.github.biezhi.anima.page.Page;
 import io.github.biezhi.lattice.example.model.SysLog;
 import io.github.biezhi.lattice.example.params.LogParam;
 
-import java.util.List;
-
-import static io.github.biezhi.anima.Anima.delete;
 import static io.github.biezhi.anima.Anima.select;
 
 /**
@@ -31,14 +28,6 @@ public class LogService {
             query.and(SysLog::getCreatedTime).lte(logParam.getEndDate());
         }
         return query.page(logParam.getPageNumber(), logParam.getPageSize());
-    }
-
-    public int deleteLog(Long id) {
-        return delete().from(SysLog.class).where(SysLog::getId, id).execute();
-    }
-
-    public int cleanLog() {
-        return delete().from(SysLog.class).execute();
     }
 
 }

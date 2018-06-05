@@ -1,10 +1,12 @@
 package io.github.biezhi.lattice.example.controller.sys;
 
 import com.blade.ioc.annotation.Inject;
+import com.blade.mvc.annotation.BodyParam;
 import com.blade.mvc.annotation.GetRoute;
 import com.blade.mvc.annotation.Path;
 import com.blade.mvc.annotation.PostRoute;
 import com.blade.mvc.ui.RestResponse;
+import io.github.biezhi.anima.Anima;
 import io.github.biezhi.anima.page.Page;
 import io.github.biezhi.lattice.example.controller.BaseController;
 import io.github.biezhi.lattice.example.enums.UserStatus;
@@ -12,6 +14,9 @@ import io.github.biezhi.lattice.example.model.SysUser;
 import io.github.biezhi.lattice.example.params.UpdatePwdParam;
 import io.github.biezhi.lattice.example.params.UserParam;
 import io.github.biezhi.lattice.example.service.UserService;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author biezhi
@@ -35,12 +40,12 @@ public class UserController extends BaseController {
 
     @GetRoute("menus")
     public RestResponse menus() {
-        return RestResponse.ok(userService.findUserMenus(this.loginUser().getUserId()));
+        return RestResponse.ok(userService.findUserMenus(this.userId()));
     }
 
     @GetRoute("perms")
     public RestResponse perms() {
-        return RestResponse.ok(userService.findUserPerms(this.loginUser().getUserId()));
+        return RestResponse.ok(userService.findUserPerms(this.userId()));
     }
 
     @PostRoute("updatePwd")
@@ -54,27 +59,31 @@ public class UserController extends BaseController {
 
     @PostRoute("save")
     public RestResponse save(SysUser sysUser) {
-        return RestResponse.ok();
+        sysUser.setCreatedId(this.userId());
+        sysUser.setCreatedTime(LocalDateTime.now());
+        sysUser.setModifiedTime(LocalDateTime.now());
+        return RestResponse.ok(sysUser.save());
     }
 
     @PostRoute("update")
     public RestResponse update(SysUser sysUser) {
-        return RestResponse.ok();
+        sysUser.setModifiedTime(LocalDateTime.now());
+        return RestResponse.ok(sysUser.update());
     }
 
     @PostRoute("remove")
-    public RestResponse remove(Long[] ids) {
-        return RestResponse.ok(userService.deleteUsers(ids));
+    public RestResponse remove(@BodyParam List<Long> ids) {
+        return RestResponse.ok().peek(() -> Anima.deleteBatch(SysUser.class, ids));
     }
 
     @PostRoute("disable")
-    public RestResponse disable(Long[] ids) {
-        return RestResponse.ok(userService.updateStatus(UserStatus.DISABLE, ids));
+    public RestResponse disable(@BodyParam List<Long> ids) {
+        return RestResponse.ok().peek(() -> userService.updateStatus(UserStatus.DISABLE, ids));
     }
 
     @PostRoute("enable")
-    public RestResponse enable(Long[] ids) {
-        return RestResponse.ok(userService.updateStatus(UserStatus.NORMAL, ids));
+    public RestResponse enable(@BodyParam List<Long> ids) {
+        return RestResponse.ok().peek(() -> userService.updateStatus(UserStatus.NORMAL, ids));
     }
 
 }

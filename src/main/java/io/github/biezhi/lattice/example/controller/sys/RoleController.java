@@ -1,23 +1,22 @@
 package io.github.biezhi.lattice.example.controller.sys;
 
 import com.blade.ioc.annotation.Inject;
-import com.blade.mvc.annotation.GetRoute;
-import com.blade.mvc.annotation.Param;
-import com.blade.mvc.annotation.Path;
-import com.blade.mvc.annotation.PostRoute;
+import com.blade.mvc.annotation.*;
 import com.blade.mvc.ui.RestResponse;
+import io.github.biezhi.anima.Anima;
 import io.github.biezhi.anima.page.Page;
-import io.github.biezhi.lattice.annotation.Users;
 import io.github.biezhi.lattice.example.controller.BaseController;
 import io.github.biezhi.lattice.example.model.SysRole;
 import io.github.biezhi.lattice.example.params.RoleParam;
 import io.github.biezhi.lattice.example.service.RoleService;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * @author biezhi
  * @date 2018/6/5
  */
-@Users
 @Path(value = "sys/role", restful = true)
 public class RoleController extends BaseController {
 
@@ -36,12 +35,16 @@ public class RoleController extends BaseController {
 
     @PostRoute("save")
     public RestResponse save(SysRole sysRole) {
-        return RestResponse.ok();
+        sysRole.setCreatedId(this.userId());
+        sysRole.setCreatedTime(LocalDateTime.now());
+        sysRole.setModifiedTime(LocalDateTime.now());
+        return RestResponse.ok(sysRole.save());
     }
 
     @PostRoute("update")
     public RestResponse update(SysRole sysRole) {
-        return RestResponse.ok();
+        sysRole.setModifiedTime(LocalDateTime.now());
+        return RestResponse.ok(sysRole.update());
     }
 
     @GetRoute("list")
@@ -50,8 +53,8 @@ public class RoleController extends BaseController {
     }
 
     @PostRoute("remove")
-    public RestResponse remove(Long[] ids) {
-        return RestResponse.ok(roleService.deleteRoles(ids));
+    public RestResponse remove(@BodyParam List<Long> ids) {
+        return RestResponse.ok().peek(() -> Anima.deleteBatch(SysRole.class, ids));
     }
 
 }

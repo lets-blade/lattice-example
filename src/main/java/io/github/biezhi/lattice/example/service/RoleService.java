@@ -25,8 +25,4 @@ public class RoleService {
         return query.page(roleParam.getPageNumber(), roleParam.getPageSize());
     }
 
-    public int deleteRoles(Long[] ids) {
-        return 0;
-    }
-
 }

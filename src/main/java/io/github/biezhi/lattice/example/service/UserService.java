@@ -87,12 +87,10 @@ public class UserService {
         return null;
     }
 
-    public int deleteUsers(Long[] ids) {
-        return 0;
-    }
-
-    public int updateStatus(UserStatus userStatus, Long[] ids) {
-        return 0;
+    public void updateStatus(UserStatus userStatus, List<Long> ids) {
+        for (Long id : ids) {
+            update().from(SysUser.class).set(SysUser::getStatus, userStatus.getStatus()).where(SysUser::getUserId, id);
+        }
     }
 
 }
