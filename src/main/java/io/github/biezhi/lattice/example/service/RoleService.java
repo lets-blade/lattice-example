@@ -2,9 +2,10 @@ package io.github.biezhi.lattice.example.service;
 
 import com.blade.ioc.annotation.Bean;
 import com.blade.kit.StringKit;
+import io.github.biezhi.anima.core.AnimaQuery;
+import io.github.biezhi.anima.page.Page;
 import io.github.biezhi.lattice.example.model.SysRole;
-
-import java.util.List;
+import io.github.biezhi.lattice.example.params.RoleParam;
 
 import static io.github.biezhi.anima.Anima.select;
 
@@ -15,15 +16,17 @@ import static io.github.biezhi.anima.Anima.select;
 @Bean
 public class RoleService {
 
-    public List<SysRole> findRoles(String roleName) {
-        if (StringKit.isNotBlank(roleName)) {
-            return select().from(SysRole.class).where(SysRole::getRoleName, roleName).all();
+    public Page<SysRole> findRoles(RoleParam roleParam) {
+
+        AnimaQuery<SysRole> query = select().from(SysRole.class);
+        if (StringKit.isNotEmpty(roleParam.getRoleName())) {
+            query.and(SysRole::getRoleName, roleParam.getRoleName());
         }
-        return select().from(SysRole.class).all();
+        return query.page(roleParam.getPageNumber(), roleParam.getPageSize());
     }
 
-    public void deleteRoles(Long[] ids) {
-
+    public int deleteRoles(Long[] ids) {
+        return 0;
     }
 
 }

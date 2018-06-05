@@ -4,9 +4,11 @@ import com.blade.exception.ValidatorException;
 import com.blade.ioc.annotation.Bean;
 import com.blade.kit.EncryptKit;
 import com.blade.validator.Validators;
+import io.github.biezhi.anima.page.Page;
 import io.github.biezhi.lattice.example.enums.UserStatus;
 import io.github.biezhi.lattice.example.model.*;
 import io.github.biezhi.lattice.example.params.UpdatePwdParam;
+import io.github.biezhi.lattice.example.params.UserParam;
 
 import java.util.Arrays;
 import java.util.List;
@@ -80,15 +82,17 @@ public class UserService {
         update().from(SysUser.class).set(SysUser::getPassword, newPwd).where(SysUser::getUserId, sysUser.getUserId()).execute();
     }
 
-    public List<SysUser> findUsers(String username) {
+    public Page<SysUser> findUsers(UserParam userParam) {
+
         return null;
     }
 
-    public void deleteUsers(Long[] ids) {
-
+    public int deleteUsers(Long[] ids) {
+        return 0;
     }
 
-    public void updateStatus(UserStatus userStatus, Long[] ids) {
+    public int updateStatus(UserStatus userStatus, Long[] ids) {
+        return 0;
     }
 
 }

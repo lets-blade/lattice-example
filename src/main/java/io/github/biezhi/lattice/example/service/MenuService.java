@@ -18,8 +18,8 @@ public class MenuService {
         return select().from(SysMenu.class).all();
     }
 
-    public void deleteMenus(Long[] ids) {
-
+    public int deleteMenus(Long[] ids) {
+        return 0;
     }
 
 }
