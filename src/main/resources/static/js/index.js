@@ -36,7 +36,7 @@ var vm = new Vue({
 	data : {
 		user : {},
 		menuList : {},
-		main : "system/index/main.html",
+		main : "/admin/main.html",
 		pswd : null,
 		newPswd : null,
 		navTitle : "控制台"
@@ -52,18 +52,18 @@ var vm = new Vue({
 			}
 		},
 		getMenuList : function(event) {
-			$.getJSON("sys/user/menus?_" + $.now(), function(r) {
-				vm.menuList = r.menuList;
+			$.getJSON("/sys/user/menus?_" + $.now(), function(r) {
+				vm.menuList = r.payload;
 			});
 		},
 		getPermList : function(event) {
-			$.getJSON("sys/user/perms?_" + $.now(), function(r) {
-				window.perms = r.rows;
+			$.getJSON("/sys/user/perms?_" + $.now(), function(r) {
+				window.perms = r.payload;
 			});
 		},
 		getUser : function() {
-			$.getJSON("sys/user/info?_" + $.now(), function(r) {
-				vm.user = r.user;
+			$.getJSON("/sys/user/info?_" + $.now(), function(r) {
+				vm.user = r.payload;
 			});
 		},
 		updatePassword : function() {
@@ -82,15 +82,15 @@ var vm = new Vue({
                         dialogTip('新密码为空！', '#newPswd');
 						return false;
 					}
-					var data = "pswd=" + vm.pswd + "&newPswd="
+					var data = "pwd=" + vm.pswd + "&newPwd="
 							+ vm.newPswd;
 					$.ajax({
 						type : "POST",
-						url : "sys/user/updatePswd?_" + $.now(),
+						url : "/sys/user/updatePwd?_" + $.now(),
 						data : data,
 						dataType : "json",
 						success : function(result) {
-							if (result.code == 0) {
+							if (result.success) {
 								layer.close(index);
 								dialogMsg(result.msg, 'success');
 								location.reload();
@@ -118,11 +118,10 @@ var vm = new Vue({
 					setTimeout(function() {
 						$.ajax({
 			                type: "POST",
-			                url: "sys/logout",
+			                url: "/logout",
 			                dataType: "json",
 			                success: function(r){
-			                    localStorage.removeItem("token");
-			                    toUrl('login.html');
+			                    toUrl('/login');
 			                }
 			            });
 					}, 500);
@@ -189,9 +188,9 @@ var vm = new Vue({
 function routerList(router, menuList) {
 	for ( var key in menuList) {
 		var menu = menuList[key];
-		if (menu.type == 0) {
+		if (menu.type === 0) {
 			routerList(router, menu.list);
-		} else if (menu.type == 1) {
+		} else if (menu.type === 1) {
 			router.add('#' + menu.url, function() {
 				var url = window.location.hash;
 

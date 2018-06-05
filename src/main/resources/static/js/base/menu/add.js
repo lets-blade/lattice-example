@@ -2,7 +2,7 @@
  * 新增-菜单管理js
  */
 var vm = new Vue({
-	el:'#dpLTE',
+	el:'#app',
 	data: {
 		menu:{
 			parentName:null,
@@ -17,7 +17,7 @@ var vm = new Vue({
 			dialogOpen({
 				id: 'iconSelect',
 				title: '选取图标',
-		        url: 'base/menu/icon.html?_' + $.now(),
+		        url: '/admin/menu/icon.html?_' + $.now(),
 		        scroll : true,
 		        width: "1030px",
 		        height: "600px",
@@ -28,7 +28,7 @@ var vm = new Vue({
 		    dialogOpen({
 				id: 'layerMenuTree',
 				title: '选择菜单',
-		        url: 'base/menu/tree.html?_' + $.now(),
+		        url: '/admin/menu/tree.html?_' + $.now(),
 		        scroll : true,
 		        width: "300px",
 		        height: "450px",
@@ -42,7 +42,7 @@ var vm = new Vue({
 		        return false;
 		    }
 		    $.SaveForm({
-		    	url: '../../sys/menu/save?_' + $.now(),
+		    	url: '/sys/menu/save?_' + $.now(),
 		    	param: vm.menu,
 		    	success: function(data) {
 		    		$.currentIframe().vm.load();

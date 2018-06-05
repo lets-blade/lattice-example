@@ -4,7 +4,7 @@
 var doublebox = null;
 
 var vm = new Vue({
-	el:'#dpLTE',
+	el:'#app',
 	data: {
 		roleList:{},
         selectedList:[],
@@ -22,7 +22,7 @@ var vm = new Vue({
                 type: 'get',
                 async: false,
                 contentType : 'application/json',
-                url: '../../sys/role/select?_' + $.now(),
+                url: '/sys/role/select?_' + $.now(),
                 data: null,
                 success: function(r) {
                     vm.roleList = r.rows;
@@ -30,23 +30,10 @@ var vm = new Vue({
                 dataType: 'json'
             });
         },
-		orgTree: function() {
-			dialogOpen({
-				id: 'layerOrgTree',
-				title: '选择机构',
-		        url: 'base/user/org.html?_' + $.now(),
-		        scroll : true,
-		        width: "300px",
-		        height: "450px",
-		        yes : function(iframeId) {
-		        	top.frames[iframeId].vm.acceptClick();
-				}
-		    })
-		},
 		setForm: function() {
             this.getRoleList();
 			$.SetForm({
-				url: '../../sys/user/infoUser?_' + $.now(),
+				url: '/sys/user/infoUser?_' + $.now(),
 		    	param: vm.user.userId,
 		    	success: function(data) {
                     vm.user = data;
@@ -94,7 +81,7 @@ var vm = new Vue({
                 vm.user.roleIdList.push(parseInt(item));
             });
 		    $.ConfirmForm({
-		    	url: '../../sys/user/update?_' + $.now(),
+		    	url: '/sys/user/update?_' + $.now(),
 		    	param: vm.user,
 		    	success: function(data) {
 		    		$.currentIframe().vm.load();

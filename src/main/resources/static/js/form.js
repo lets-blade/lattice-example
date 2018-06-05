@@ -32,7 +32,7 @@
 				dialogLoading(false);
                 if(XMLHttpRequest.responseJSON.code == 401){
                     toUrl('login.html');
-                } else if(textStatus=="error"){
+                } else if(textStatus ==="error"){
                     dialogMsg("请求超时，请稍候重试...", "error");
                 } else {
                     dialogMsg(errorThrown, 'error');

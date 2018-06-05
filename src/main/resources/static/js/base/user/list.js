@@ -17,7 +17,7 @@ function initialPage() {
 
 function getGrid() {
 	$('#dataGrid').bootstrapTableEx({
-		url : '../../sys/user/list?_' + $.now(),
+		url : '/sys/user/list?_' + $.now(),
 		height : $(window).height() - 56,
 		queryParams : function(params) {
 			params.username = vm.keyword;
@@ -33,11 +33,7 @@ function getGrid() {
 			field : "username",
 			title : "用户名",
 			width : "200px"
-		}, {
-			field : "orgName",
-			title : "所属机构",
-			width : "200px"
-		}, {
+		},{
 			field : "email",
 			title : "邮箱",
 			width : "300px"
@@ -57,7 +53,7 @@ function getGrid() {
 				}
 			}
 		}, {
-			field : "gmtCreate",
+			field : "createdTime",
 			title : "创建时间",
 			width : "200px"
 		}, {
@@ -68,7 +64,7 @@ function getGrid() {
 }
 
 var vm = new Vue({
-	el : '#dpLTE',
+	el : '#app',
 	data : {
 		keyword : null
 	},
@@ -79,7 +75,7 @@ var vm = new Vue({
 		save : function() {
 			dialogOpen({
 				title : '新增用户',
-				url : 'base/user/add.html?_' + $.now(),
+				url : '/admin/user/add.html?_' + $.now(),
                 width : '620px',
                 height : '510px',
 				scroll : true,
@@ -93,7 +89,7 @@ var vm = new Vue({
 			if (checkedRow(ck)) {
 				dialogOpen({
 					title : '编辑用户',
-					url : 'base/user/edit.html?_' + $.now(),
+					url : '/admin/user/edit.html?_' + $.now(),
                     width : '620px',
                     height : '510px',
 					scroll : true,
@@ -114,7 +110,7 @@ var vm = new Vue({
 					ids[idx] = item.userId;
 				});
 				$.RemoveForm({
-					url : '../../sys/user/remove?_' + $.now(),
+					url : '/sys/user/remove?_' + $.now(),
 					param : ids,
 					success : function(data) {
 						vm.load();
@@ -130,7 +126,7 @@ var vm = new Vue({
 				});
 				$.ConfirmForm({
 					msg : '您是否要禁用所选账户吗？',
-					url : '../../sys/user/disable?_' + $.now(),
+					url : '/sys/user/disable?_' + $.now(),
 					param : ids,
 					success : function(data) {
 						vm.load();
@@ -146,7 +142,7 @@ var vm = new Vue({
 				});
 				$.ConfirmForm({
 					msg : '您是否要启用所选账户吗？',
-					url : '../../sys/user/enable?_' + $.now(),
+					url : '/sys/user/enable?_' + $.now(),
 					param : ids,
 					success : function(data) {
 						vm.load();
@@ -159,7 +155,7 @@ var vm = new Vue({
 			if (checkedRow(ck)) {
 				dialogOpen({
 					title : '重置密码',
-					url : 'base/user/reset.html?_' + $.now(),
+					url : '/admin/user/reset.html?_' + $.now(),
 					width : '400px',
 					height : '220px',
 					success : function(iframeId) {

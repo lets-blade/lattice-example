@@ -15,7 +15,7 @@ function initialPage() {
 
 function getGrid() {
 	$('#dataGrid').bootstrapTableEx({
-		url: '../../sys/role/list?_' + $.now(),
+		url: '/sys/role/list?_' + $.now(),
 		height: $(window).height()-56,
 		queryParams: function(params){
 			params.roleName = vm.keyword;
@@ -51,7 +51,7 @@ function getGrid() {
 }
 
 var vm = new Vue({
-	el:'#dpLTE',
+	el:'#app',
 	data: {
 		keyword: null
 	},
@@ -62,7 +62,7 @@ var vm = new Vue({
 		save: function() {
 			dialogOpen({
 				title: '新增角色',
-				url: 'base/role/add.html?_' + $.now(),
+				url: '/admin/role/add.html?_' + $.now(),
 				width: '420px',
 				height: '350px',
 				yes : function(iframeId) {
@@ -75,7 +75,7 @@ var vm = new Vue({
 			if(checkedRow(ck)){
 				dialogOpen({
 					title: '编辑角色',
-					url: 'base/role/edit.html?_' + $.now(),
+					url: '/admin/role/edit.html?_' + $.now(),
 					width: '420px',
 					height: '350px',
 					success: function(iframeId){
@@ -95,7 +95,7 @@ var vm = new Vue({
 					ids[idx] = item.roleId;
 				});
 				$.RemoveForm({
-					url: '../../sys/role/remove?_' + $.now(),
+					url: '/sys/role/remove?_' + $.now(),
 			    	param: ids,
 			    	success: function(data) {
 			    		vm.load();
@@ -108,7 +108,7 @@ var vm = new Vue({
 			if(checkedRow(ck)){
 				dialogOpen({
 					title: '操作权限',
-					url: 'base/role/opt.html?_' + $.now(),
+					url: '/admin/role/opt.html?_' + $.now(),
 					scroll : true,
 					width: "300px",
 					height: "450px",
@@ -127,7 +127,7 @@ var vm = new Vue({
 			if(checkedRow(ck)){
 				dialogOpen({
 					title: '数据权限',
-					url: 'base/role/data.html?_' + $.now(),
+					url: '/admin/role/data.html?_' + $.now(),
 					scroll : true,
 					width: "300px",
 					height: "450px",

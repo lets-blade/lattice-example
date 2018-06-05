@@ -15,7 +15,7 @@ function initialPage() {
 
 function getGrid() {
 	var colunms = TreeGrid.initColumn();
-    var table = new TreeTable(TreeGrid.id, '../../sys/menu/list?_' + $.now(), colunms);
+    var table = new TreeTable(TreeGrid.id, '/sys/menu/list?_' + $.now(), colunms);
     table.setExpandColumn(2);
     table.setIdField("menuId");
     table.setCodeField("menuId");
@@ -27,7 +27,7 @@ function getGrid() {
 }
 
 var vm = new Vue({
-	el:'#dpLTE',
+	el:'#app',
 	methods : {
 		load: function() {
 			TreeGrid.table.refresh();
@@ -35,7 +35,7 @@ var vm = new Vue({
 		save: function() {
 			dialogOpen({
 				title: '新增菜单',
-				url: 'base/menu/add.html?_' + $.now(),
+				url: '/admin/menu/add.html?_' + $.now(),
 				width: '600px',
 				height: '420px',
 				scroll : true,
@@ -49,7 +49,7 @@ var vm = new Vue({
 			if(checkedRow(ck)){
 				dialogOpen({
 					title: '编辑菜单',
-					url: 'base/menu/edit.html?_' + $.now(),
+					url: '/admin/menu/edit.html?_' + $.now(),
 					width: '600px',
 					height: '420px',
 					scroll : true,
@@ -70,7 +70,7 @@ var vm = new Vue({
 					ids[idx] = item.id;
 				});
 				$.RemoveForm({
-					url: '../../sys/menu/remove?_' + $.now(),
+					url: '/sys/menu/remove?_' + $.now(),
 			    	param: ids,
 			    	success: function(data) {
 			    		vm.load();

@@ -4,7 +4,7 @@
 var doublebox = null;
 
 var vm = new Vue({
-	el:'#dpLTE',
+	el:'#app',
 	data: {
 		roleList:{},
 		user:{
@@ -16,7 +16,7 @@ var vm = new Vue({
 	},
 	methods : {
         getRoleList: function(){
-            $.get('../../sys/role/select?_' + $.now(), function(r){
+            $.get('/sys/role/select?_' + $.now(), function(r){
                 vm.roleList = r.rows;
                 doublebox = $('.rolebox').doublebox({
                     selectorMinimalHeight: 187,
@@ -31,19 +31,6 @@ var vm = new Vue({
                 });
             });
         },
-		orgTree: function() {
-			dialogOpen({
-				id: 'layerOrgTree',
-				title: '选择机构',
-		        url: 'base/user/org.html?_' + $.now(),
-		        scroll : true,
-		        width: "300px",
-		        height: "450px",
-		        yes : function(iframeId) {
-		        	top.frames[iframeId].vm.acceptClick();
-				}
-		    })
-		},
 		acceptClick: function() {
             var roles = doublebox.getSelectedOptions();
             if(isNullOrEmpty(roles)) {
@@ -58,7 +45,7 @@ var vm = new Vue({
                 vm.user.roleIdList.push(parseInt(item));
             });
 		    $.SaveForm({
-		    	url: '../../sys/user/save?_' + $.now(),
+		    	url: '/sys/user/save?_' + $.now(),
 		    	param: vm.user,
 		    	success: function(data) {
 		    		$.currentIframe().vm.load();
@@ -69,4 +56,4 @@ var vm = new Vue({
 	created : function() {
 		this.getRoleList();
 	}
-})
+});

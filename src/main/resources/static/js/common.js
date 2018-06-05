@@ -42,7 +42,7 @@ function hasPermission(permission) {
 
 toUrl = function(href) {
 	window.location.href = href;
-}
+};
 
 $.fn.bootstrapTableEx = function(opt){
 	var defaults = {
@@ -60,7 +60,7 @@ $.fn.bootstrapTableEx = function(opt){
 		sidePagination: 'server',
 		queryParamsType : null,
 		columns: []
-	}
+	};
 	var option = $.extend({}, defaults, opt);
     if(!option.pagination){
         option.responseHandler = function(res) {
@@ -393,4 +393,4 @@ $.currentIframe = function () {
 		return $(window.parent.document).contents().find('#main')[0].contentWindow;
     }
     return $(window.parent.document).contents().find('#'+tabiframeId())[0].contentWindow;//多层tab页嵌套
-}
+};

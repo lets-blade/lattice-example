@@ -364,11 +364,11 @@
 })(jQuery);
 
 var vm = new Vue({
-    el: '#dpLTE',
+    el: '#app',
     data: {
         user: {},
         menuList: {},
-        main: "system/index/main.html",
+        main: "/admin/main.html",
         pswd: null,
         newPswd: null
     },
@@ -395,17 +395,17 @@ var vm = new Vue({
             $('.page-tabs-content').find('.active i').trigger("click");
         },
         getMenuList: function (event) {
-            $.getJSON("sys/menu/user?_" + $.now(), function (r) {
+            $.getJSON("/sys/menu/user?_" + $.now(), function (r) {
                 vm.menuList = r.menuList;
             });
         },
         getPermList: function (event) {
-            $.getJSON("sys/user/perms?_" + $.now(), function (r) {
+            $.getJSON("/sys/user/perms?_" + $.now(), function (r) {
                 window.perms = r.rows;
             });
         },
         getUser: function () {
-            $.getJSON("sys/user/info?_" + $.now(), function (r) {
+            $.getJSON("/sys/user/info?_" + $.now(), function (r) {
                 vm.user = r.user;
             });
         },
@@ -425,15 +425,14 @@ var vm = new Vue({
                         dialogTip('新密码为空！', '#newPswd');
                         return false;
                     }
-                    var data = "pswd=" + vm.pswd + "&newPswd="
-                        + vm.newPswd;
+                    var data = "pwd=" + vm.pswd + "&newPwd=" + vm.newPswd;
                     $.ajax({
                         type: "POST",
-                        url: "sys/user/updatePswd?_" + $.now(),
+                        url: "/sys/user/updatePwd?_" + $.now(),
                         data: data,
                         dataType: "json",
                         success: function (result) {
-                            if (result.code == 0) {
+                            if (result.success) {
                                 layer.close(index);
                                 dialogMsg(result.msg, 'success');
                                 location.reload();
@@ -461,11 +460,10 @@ var vm = new Vue({
                     setTimeout(function() {
                         $.ajax({
                             type: "POST",
-                            url: "sys/logout",
+                            url: "/logout",
                             dataType: "json",
                             success: function(r){
-                                localStorage.removeItem("token");
-                                toUrl('login.html');
+                                toUrl('/login');
                             }
                         });
                     }, 500);
