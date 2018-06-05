@@ -1,10 +1,12 @@
 package io.github.biezhi.lattice.example.service;
 
+import com.blade.exception.ValidatorException;
 import com.blade.ioc.annotation.Bean;
-import io.github.biezhi.lattice.example.model.SysMenu;
-import io.github.biezhi.lattice.example.model.SysRole;
-import io.github.biezhi.lattice.example.model.SysRoleMenu;
-import io.github.biezhi.lattice.example.model.SysUserRole;
+import com.blade.kit.EncryptKit;
+import com.blade.validator.Validators;
+import io.github.biezhi.lattice.example.enums.UserStatus;
+import io.github.biezhi.lattice.example.model.*;
+import io.github.biezhi.lattice.example.params.UpdatePwdParam;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.github.biezhi.anima.Anima.select;
+import static io.github.biezhi.anima.Anima.update;
 
 /**
  * @author biezhi
@@ -56,6 +59,36 @@ public class UserService {
                 .map(perms -> perms.split(","))
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toSet());
+    }
+
+    public void updatePwd(UpdatePwdParam updatePwdParam) {
+        Validators.notEmpty().test(updatePwdParam.getPwd()).throwIfInvalid("旧密码");
+        Validators.notEmpty().test(updatePwdParam.getNewPwd()).throwIfInvalid("新密码");
+        Validators.lessThan(6).test(updatePwdParam.getNewPwd()).throwIfInvalid("新密码");
+
+        if (updatePwdParam.getPwd().equals(updatePwdParam.getNewPwd())) {
+            throw new ValidatorException("新密码和旧密码相同");
+        }
+
+        String  oldPwd  = EncryptKit.md5(updatePwdParam.getUsername() + updatePwdParam.getPwd());
+        SysUser sysUser = select().from(SysUser.class).byId(updatePwdParam.getUserId());
+        if (!sysUser.getPassword().equals(oldPwd)) {
+            throw new ValidatorException("旧密码错误");
+        }
+
+        String newPwd = EncryptKit.md5(updatePwdParam.getUsername() + updatePwdParam.getNewPwd());
+        update().from(SysUser.class).set(SysUser::getPassword, newPwd).where(SysUser::getUserId, sysUser.getUserId()).execute();
+    }
+
+    public List<SysUser> findUsers(String username) {
+        return null;
+    }
+
+    public void deleteUsers(Long[] ids) {
+
+    }
+
+    public void updateStatus(UserStatus userStatus, Long[] ids) {
     }
 
 }
