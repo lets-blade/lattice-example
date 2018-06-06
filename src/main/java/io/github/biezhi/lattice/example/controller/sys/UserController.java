@@ -30,6 +30,7 @@ public class UserController extends BaseController {
     @Inject
     private UserService userService;
 
+    @Permissions("sys:user:list")
     @PostRoute("list")
     public Page<SysUser> list(UserParam userParam) {
         return userService.findUsers(userParam);

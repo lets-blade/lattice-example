@@ -6,6 +6,7 @@ import com.blade.mvc.annotation.Path;
 import com.blade.mvc.annotation.PostRoute;
 import com.blade.mvc.ui.RestResponse;
 import io.github.biezhi.anima.Anima;
+import io.github.biezhi.lattice.annotation.Permissions;
 import io.github.biezhi.lattice.annotation.Users;
 import io.github.biezhi.lattice.example.annotation.SysLog;
 import io.github.biezhi.lattice.example.controller.BaseController;
@@ -30,6 +31,7 @@ public class MenuController extends BaseController {
     }
 
     @SysLog("新增菜单")
+    @Permissions("sys:menu:save")
     @PostRoute("save")
     public RestResponse save(SysMenu sysMenu) {
         sysMenu.setCreatedTime(LocalDateTime.now());
@@ -38,18 +40,21 @@ public class MenuController extends BaseController {
     }
 
     @SysLog("修改菜单")
+    @Permissions("sys:menu:edit")
     @PostRoute("update")
     public RestResponse update(SysMenu sysMenu) {
         sysMenu.setModifiedTime(LocalDateTime.now());
         return RestResponse.ok(sysMenu.update());
     }
 
+    @Permissions("sys:menu:list")
     @GetRoute("list")
     public List<SysMenu> list() {
         return select().from(SysMenu.class).all();
     }
 
     @SysLog("删除菜单")
+    @Permissions("sys:menu:remove")
     @PostRoute("remove")
     public RestResponse remove(@BodyParam List<Long> ids) {
         return RestResponse.ok().peek(() -> Anima.deleteBatch(SysMenu.class, ids));
