@@ -3,27 +3,22 @@
 // location.href = http://localhost:8080/index.html?id=123
 // T.p('id') --> 123;
 var url = function(name) {
-	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-	var r = window.location.search.substr(1).match(reg);
-	if(r!=null)return  unescape(r[2]); return null;
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
 }
 
-//登录token
-var token = localStorage.getItem("token");
-if(token == 'null'){
-    parent.location.href = 'login.html';
-}
 
 //全局配置
 $.ajaxSetup({
-	dataType: "json",
-	cache: false,
+    dataType: "json",
+    cache: false,
     headers: {
-        "token": token
+        "token": ''
     },
     complete: function(xhr) {
-        if(xhr.responseJSON.code == 401){
-            toUrl('login.html');
+        if(xhr.responseJSON.code === 401){
+            toUrl('/login');
         }
     }
 })
@@ -31,9 +26,9 @@ $.ajaxSetup({
 //权限判断
 function hasPermission(permission) {
     if(isNullOrEmpty(window.parent.perms)) {
-    	return false;
+        return false;
     }
-	if (window.parent.perms.indexOf(permission) > -1) {
+    if (window.parent.perms.indexOf(permission) > -1) {
         return true;
     } else {
         return false;
@@ -41,33 +36,33 @@ function hasPermission(permission) {
 }
 
 toUrl = function(href) {
-	window.location.href = href;
-};
+    window.location.href = href;
+}
 
 $.fn.bootstrapTableEx = function(opt){
-	var defaults = {
-		url: '',
-		dataField: "rows",
-		method: 'post',
-		dataType: 'json',
-		selectItemName: 'id',
-		clickToSelect: true,
-		pagination: true,
-		smartDisplay: false,
-		pageSize: 10,
-		pageList: [10, 20, 30, 40, 50],
+    var defaults = {
+        url: '',
+        dataField: "rows",
+        method: 'post',
+        dataType: 'json',
+        selectItemName: 'id',
+        clickToSelect: true,
+        pagination: true,
+        smartDisplay: false,
+        pageSize: 10,
+        pageList: [10, 20, 30, 40, 50],
         paginationLoop: false,
-		sidePagination: 'server',
-		queryParamsType : null,
-		columns: []
-	};
-	var option = $.extend({}, defaults, opt);
+        sidePagination: 'server',
+        queryParamsType : null,
+        columns: []
+    }
+    var option = $.extend({}, defaults, opt);
     if(!option.pagination){
         option.responseHandler = function(res) {
             return res.rows;
         }
     }
-	$(this).bootstrapTable(option);
+    $(this).bootstrapTable(option);
 }
 
 formatDate = function (v, format) {
@@ -156,167 +151,167 @@ reload = function () {
 }
 
 dialogOpen = function(opt){
-	var defaults = {
-		id : 'layerForm',
-		title : '',
-		width: '',
-		height: '',
-		url : null,
-		scroll : false,
-		data : {},
-		btn: ['确定', '取消'],
-		success: function(){},
-		yes: function(){}
-	}
-	var option = $.extend({}, defaults, opt), content = null;
-	if(option.scroll){
-		content = [option.url]
-	}else{
-		content = [option.url, 'no']
-	}
-	top.layer.open({
-	  	type : 2,
-	  	id : option.id,
-		title : option.title,
-		closeBtn : 1,
-		anim: -1,
-		isOutAnim: false,
-		shadeClose : false,
-		shade : 0.3,
-		area : [option.width, option.height],
-		content : content,
-		btn: option.btn,
-		success: function(){
-			option.success(option.id);
-		},
-		yes: function(){
-			option.yes(option.id);
-		}
+    var defaults = {
+        id : 'layerForm',
+        title : '',
+        width: '',
+        height: '',
+        url : null,
+        scroll : false,
+        data : {},
+        btn: ['确定', '取消'],
+        success: function(){},
+        yes: function(){}
+    }
+    var option = $.extend({}, defaults, opt), content = null;
+    if(option.scroll){
+        content = [option.url]
+    }else{
+        content = [option.url, 'no']
+    }
+    top.layer.open({
+        type : 2,
+        id : option.id,
+        title : option.title,
+        closeBtn : 1,
+        anim: -1,
+        isOutAnim: false,
+        shadeClose : false,
+        shade : 0.3,
+        area : [option.width, option.height],
+        content : content,
+        btn: option.btn,
+        success: function(){
+            option.success(option.id);
+        },
+        yes: function(){
+            option.yes(option.id);
+        }
     });
 }
 
 dialogContent = function(opt){
-	var defaults = {
-		title : '系统窗口',
-		width: '',
-		height: '',
-		content : null,
-		data : {},
-		btn: ['确定', '取消'],
-		success: null,
-		yes: null
-	}
-	var option = $.extend({}, defaults, opt);
-	return top.layer.open({
-	  	type : 1,
-		title : option.title,
-		closeBtn : 1,
-		anim: -1,
-		isOutAnim: false,
-		shadeClose : false,
-		shade : 0.3,
-		area : [option.width, option.height],
-		shift : 5,
-		content : option.content,
-		btn: option.btn,
-		success: option.success,
-		yes: option.yes
+    var defaults = {
+        title : '系统窗口',
+        width: '',
+        height: '',
+        content : null,
+        data : {},
+        btn: ['确定', '取消'],
+        success: null,
+        yes: null
+    }
+    var option = $.extend({}, defaults, opt);
+    return top.layer.open({
+        type : 1,
+        title : option.title,
+        closeBtn : 1,
+        anim: -1,
+        isOutAnim: false,
+        shadeClose : false,
+        shade : 0.3,
+        area : [option.width, option.height],
+        shift : 5,
+        content : option.content,
+        btn: option.btn,
+        success: option.success,
+        yes: option.yes
     });
 }
 
 dialogAjax = function(opt){
-	var defaults = {
-		title : '系统窗口',
-		width: '',
-		height: '',
-		url : null,
-		data : {},
-		btn: ['确定', '取消'],
-		success: null,
-		yes: null
-	}
-	var option = $.extend({}, defaults, opt);
-	$.post(option.url, null, function(content){
-		layer.open({
-		  	type : 1,
-			title : option.title,
-			closeBtn : 1,
-			anim: -1,
-			isOutAnim: false,
-			shadeClose : false,
-			shade : 0.3,
-			area : [option.width, option.height],
-			shift : 5,
-			content : content,
-			btn: option.btn,
-			success: option.success,
-			yes: option.yes
-	    });
-	});
+    var defaults = {
+        title : '系统窗口',
+        width: '',
+        height: '',
+        url : null,
+        data : {},
+        btn: ['确定', '取消'],
+        success: null,
+        yes: null
+    }
+    var option = $.extend({}, defaults, opt);
+    $.post(option.url, null, function(content){
+        layer.open({
+            type : 1,
+            title : option.title,
+            closeBtn : 1,
+            anim: -1,
+            isOutAnim: false,
+            shadeClose : false,
+            shade : 0.3,
+            area : [option.width, option.height],
+            shift : 5,
+            content : content,
+            btn: option.btn,
+            success: option.success,
+            yes: option.yes
+        });
+    });
 }
 
 dialogAlert = function (content, type) {
-	var msgType = {
-		success:1,
-		error:2,
-		warn:3,
-		info:7
-	};
-	if(isNullOrEmpty(type)){
-		type='info';
-	}
-	top.layer.alert(content, {
+    var msgType = {
+        success:1,
+        error:2,
+        warn:3,
+        info:7
+    };
+    if(isNullOrEmpty(type)){
+        type='info';
+    }
+    top.layer.alert(content, {
         icon: msgType[type],
         title: "系统提示",
         anim: -1,
         btnAlign: 'c',
-		isOutAnim: false
+        isOutAnim: false
     });
 }
 
 dialogConfirm = function (content, callBack) {
-	top.layer.confirm(content, {
-		area: '338px',
-		icon: 7,
+    top.layer.confirm(content, {
+        area: '338px',
+        icon: 7,
         anim: -1,
-		isOutAnim: false,
+        isOutAnim: false,
         title: "系统提示",
         btn: ['确认', '取消'],
         btnAlign: 'c',
-    	yes: callBack
+        yes: callBack
     });
 }
 
 dialogMsg = function(msg, type) {
-	var msgType = {
-		success:1,
-		error:2,
-		warn:3,
-		info:7
-	};
-	if(isNullOrEmpty(type)){
-		type='info';
-	}
-	top.layer.msg(msg, {
-		icon: msgType[type],
-		time: 2000
-	}); 
+    var msgType = {
+        success:1,
+        error:2,
+        warn:3,
+        info:7
+    };
+    if(isNullOrEmpty(type)){
+        type='info';
+    }
+    top.layer.msg(msg, {
+        icon: msgType[type],
+        time: 2000
+    });
 }
 
 dialogClose = function() {
-	var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-	top.layer.close(index); //再执行关闭 
+    var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    top.layer.close(index); //再执行关闭
 }
 
 dialogLoading = function(flag) {
-	if(flag){
-		top.layer.load(0, {
-			shade: [0.1,'#fff'],
-			time: 2000
-		});
-	}else{
-		top.layer.closeAll('loading');
-	}
+    if(flag){
+        top.layer.load(0, {
+            shade: [0.1,'#fff'],
+            time: 2000
+        });
+    }else{
+        top.layer.closeAll('loading');
+    }
 }
 
 dialogToastr = function(msg) {
@@ -389,8 +384,8 @@ tabiframeId = function () {
 
 $.currentIframe = function () {
     var tabId = tabiframeId();
-	if(isNullOrEmpty(tabId)) {//单页iframe嵌套
-		return $(window.parent.document).contents().find('#main')[0].contentWindow;
+    if(isNullOrEmpty(tabId)) {//单页iframe嵌套
+        return $(window.parent.document).contents().find('#main')[0].contentWindow;
     }
     return $(window.parent.document).contents().find('#'+tabiframeId())[0].contentWindow;//多层tab页嵌套
-};
+}

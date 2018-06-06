@@ -33,7 +33,7 @@ public class RoleController extends BaseController {
         return RestResponse.ok(select().from(SysRole.class).order(SysRole::getRoleId, OrderBy.DESC).all());
     }
 
-    @GetRoute("info/:roleId")
+    @PostRoute("info/:roleId")
     public RestResponse info(@PathParam Long roleId) {
         return RestResponse.ok(select().from(SysRole.class).byId(roleId));
     }
@@ -51,7 +51,7 @@ public class RoleController extends BaseController {
     @SysLog("修改角色")
     @Permissions("sys:role:edit")
     @PostRoute("update")
-    public RestResponse update(SysRole sysRole) {
+    public RestResponse update(@BodyParam SysRole sysRole) {
         sysRole.setModifiedTime(LocalDateTime.now());
         return RestResponse.ok(sysRole.update());
     }

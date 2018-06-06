@@ -17,7 +17,7 @@ var vm = new Vue({
 	methods : {
         getRoleList: function(){
             $.get('/sys/role/select?_' + $.now(), function(r){
-                vm.roleList = r.rows;
+                vm.roleList = r.payload;
                 doublebox = $('.rolebox').doublebox({
                     selectorMinimalHeight: 187,
                     filterPlaceHolder: '关键字...',

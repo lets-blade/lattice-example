@@ -5,7 +5,6 @@ var vm = new Vue({
 	el:'#app',
 	data: {
 		role: {
-			orgId: 0,
 			orgName: null
 		}
 	},
