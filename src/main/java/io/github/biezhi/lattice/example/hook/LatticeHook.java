@@ -1,6 +1,7 @@
 package io.github.biezhi.lattice.example.hook;
 
 import com.blade.ioc.annotation.Bean;
+import com.blade.kit.JsonKit;
 import com.blade.mvc.WebContext;
 import com.blade.mvc.hook.Signature;
 import com.blade.mvc.hook.WebHook;
@@ -32,7 +33,12 @@ public class LatticeHook implements WebHook {
             log.setIp(signature.request().address());
             log.setOperation(sysLog.value());
             log.setMethod(signature.getAction().getName());
-            log.setParams("");
+            if (signature.request().contentType().contains("json")) {
+                log.setParams(signature.request().bodyToString());
+            } else {
+                log.setParams(JsonKit.toString(signature.request().parameters()));
+            }
+
             AuthInfo<SysUser> authInfo = WebContext.request().session().attribute(Constant.DEFAULT_SESSION_KEY);
 
             log.setUserId(authInfo.getUser().getUserId());
