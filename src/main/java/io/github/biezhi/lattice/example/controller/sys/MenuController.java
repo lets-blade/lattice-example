@@ -33,7 +33,7 @@ public class MenuController extends BaseController {
     @SysLog("新增菜单")
     @Permissions("sys:menu:save")
     @PostRoute("save")
-    public RestResponse save(SysMenu sysMenu) {
+    public RestResponse save(@BodyParam SysMenu sysMenu) {
         sysMenu.setCreatedTime(LocalDateTime.now());
         sysMenu.setModifiedTime(LocalDateTime.now());
         return RestResponse.ok(sysMenu.save());
@@ -42,7 +42,7 @@ public class MenuController extends BaseController {
     @SysLog("修改菜单")
     @Permissions("sys:menu:edit")
     @PostRoute("update")
-    public RestResponse update(SysMenu sysMenu) {
+    public RestResponse update(@BodyParam SysMenu sysMenu) {
         sysMenu.setModifiedTime(LocalDateTime.now());
         return RestResponse.ok(sysMenu.update());
     }

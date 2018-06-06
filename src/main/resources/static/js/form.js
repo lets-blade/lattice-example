@@ -72,7 +72,7 @@ $.RemoveForm = function (options) {
                 success: function (data) {
                     if (data.success) {
                         options.success(data);
-                        dialogMsg(data.msg, 'success');
+                        dialogMsg(data.msg || '操作成功', 'success');
                         if (options.close === true) {
                             dialogClose();
                         }
@@ -185,7 +185,7 @@ $.ConfirmAjax = function (options) {
                 success: function (data) {
                     if (data.success) {
                         options.success(data);
-                        dialogMsg(data.msg, 'success');
+                        dialogMsg(data.msg || '操作成功', 'success');
                         if (options.close === true) {
                             dialogClose();
                         }

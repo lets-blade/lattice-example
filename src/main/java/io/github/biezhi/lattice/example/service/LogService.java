@@ -3,6 +3,7 @@ package io.github.biezhi.lattice.example.service;
 import com.blade.ioc.annotation.Bean;
 import com.blade.kit.StringKit;
 import io.github.biezhi.anima.core.AnimaQuery;
+import io.github.biezhi.anima.enums.OrderBy;
 import io.github.biezhi.anima.page.Page;
 import io.github.biezhi.lattice.example.model.SysLog;
 import io.github.biezhi.lattice.example.params.LogParam;
@@ -27,7 +28,7 @@ public class LogService {
         if (null != logParam.getEndDate()) {
             query.and(SysLog::getCreatedTime).lte(logParam.getEndDate());
         }
-        return query.page(logParam.getPageNumber(), logParam.getPageSize());
+        return query.order(SysLog::getId, OrderBy.DESC).page(logParam.getPageNumber(), logParam.getPageSize());
     }
 
 }

@@ -35,13 +35,13 @@ public class RoleController extends BaseController {
 
     @PostRoute("info/:roleId")
     public RestResponse info(@PathParam Long roleId) {
-        return RestResponse.ok(select().from(SysRole.class).byId(roleId));
+        return RestResponse.ok(roleService.findRole(roleId));
     }
 
     @SysLog("新增角色")
     @Permissions("sys:role:save")
     @PostRoute("save")
-    public RestResponse save(SysRole sysRole) {
+    public RestResponse save(@BodyParam SysRole sysRole) {
         sysRole.setCreatedId(this.userId());
         sysRole.setCreatedTime(LocalDateTime.now());
         sysRole.setModifiedTime(LocalDateTime.now());
@@ -67,6 +67,13 @@ public class RoleController extends BaseController {
     @PostRoute("remove")
     public RestResponse remove(@BodyParam List<Long> ids) {
         return RestResponse.ok().peek(() -> Anima.deleteBatch(SysRole.class, ids));
+    }
+
+    @SysLog("设置操作权限")
+    @Permissions("sys:role:authorizeOpt")
+    @PostRoute("authorize/opt")
+    public RestResponse authorizeOpt(@BodyParam SysRole sysRole) {
+        return RestResponse.ok().peek(() -> roleService.updateRoleOptAuthorization(sysRole));
     }
 
 }

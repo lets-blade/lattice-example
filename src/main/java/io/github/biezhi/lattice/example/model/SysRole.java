@@ -2,10 +2,12 @@ package io.github.biezhi.lattice.example.model;
 
 import com.blade.kit.json.JsonFormat;
 import io.github.biezhi.anima.Model;
+import io.github.biezhi.anima.annotation.Ignore;
 import io.github.biezhi.anima.annotation.Table;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author biezhi
@@ -26,4 +28,8 @@ public class SysRole extends Model {
 
     @JsonFormat("yyyy/MM/dd HH:mm:ss")
     private LocalDateTime modifiedTime;
+
+    @Ignore
+    private List<Long> menuIdList;
+
 }

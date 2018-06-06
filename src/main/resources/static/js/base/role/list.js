@@ -121,25 +121,6 @@ var vm = new Vue({
 					}
 				})
 			}
-		},
-		authorizeData: function(){
-			var ck = $('#dataGrid').bootstrapTable('getSelections');
-			if(checkedRow(ck)){
-				dialogOpen({
-					title: '数据权限',
-					url: '/base/role/data.html?_' + $.now(),
-					scroll : true,
-					width: "300px",
-					height: "450px",
-					success: function(iframeId){
-						top.frames[iframeId].vm.role.roleId = ck[0].roleId;
-						top.frames[iframeId].vm.setForm();
-					},
-					yes : function(iframeId) {
-						top.frames[iframeId].vm.acceptClick();
-					}
-				})
-			}
 		}
 	}
 })

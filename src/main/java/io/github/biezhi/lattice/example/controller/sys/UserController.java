@@ -65,7 +65,7 @@ public class UserController extends BaseController {
     @SysLog("新增用户")
     @Permissions("sys:user:save")
     @PostRoute("save")
-    public RestResponse save(SysUser sysUser) {
+    public RestResponse save(@BodyParam SysUser sysUser) {
         sysUser.setCreatedId(this.userId());
         sysUser.setCreatedTime(LocalDateTime.now());
         sysUser.setModifiedTime(LocalDateTime.now());
@@ -75,7 +75,7 @@ public class UserController extends BaseController {
     @SysLog("修改用户")
     @Permissions("sys:user:edit")
     @PostRoute("update")
-    public RestResponse update(SysUser sysUser) {
+    public RestResponse update(@BodyParam SysUser sysUser) {
         sysUser.setModifiedTime(LocalDateTime.now());
         return RestResponse.ok(sysUser.update());
     }
