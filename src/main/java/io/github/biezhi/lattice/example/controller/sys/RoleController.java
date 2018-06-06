@@ -4,6 +4,7 @@ import com.blade.ioc.annotation.Inject;
 import com.blade.mvc.annotation.*;
 import com.blade.mvc.ui.RestResponse;
 import io.github.biezhi.anima.Anima;
+import io.github.biezhi.anima.enums.OrderBy;
 import io.github.biezhi.anima.page.Page;
 import io.github.biezhi.lattice.example.controller.BaseController;
 import io.github.biezhi.lattice.example.model.SysRole;
@@ -12,6 +13,8 @@ import io.github.biezhi.lattice.example.service.RoleService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static io.github.biezhi.anima.Anima.select;
 
 /**
  * @author biezhi
@@ -24,13 +27,13 @@ public class RoleController extends BaseController {
     private RoleService roleService;
 
     @GetRoute("select")
-    public RestResponse select(@Param String username) {
-        return RestResponse.ok();
+    public RestResponse selectList() {
+        return RestResponse.ok(select().from(SysRole.class).order(SysRole::getRoleId, OrderBy.DESC).all());
     }
 
-    @GetRoute("info")
-    public RestResponse info(@Param String username) {
-        return RestResponse.ok();
+    @GetRoute("info/:roleId")
+    public RestResponse info(@PathParam Long roleId) {
+        return RestResponse.ok(select().from(SysRole.class).byId(roleId));
     }
 
     @PostRoute("save")

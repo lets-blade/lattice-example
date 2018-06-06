@@ -48,8 +48,7 @@
             setForm: function() {
                 this.getMenu();
 				$.SetForm({
-					url: '/sys/role/info',
-			    	param: vm.role.roleId,
+                    url: '/sys/role/info/' + vm.role.roleId + '?_' + $.now(),
 			    	success: function(data) {
 			    		vm.role = data;
 			    		//勾选角色所拥有的菜单

@@ -33,8 +33,7 @@
 		methods : {
             setForm: function() {
 				$.SetForm({
-					url: '/sys/role/info',
-			    	param: vm.role.roleId,
+                    url: '/sys/role/info/' + vm.role.roleId + '?_' + $.now(),
 			    	success: function(data) {
 			    		vm.role = data;
 			    	}

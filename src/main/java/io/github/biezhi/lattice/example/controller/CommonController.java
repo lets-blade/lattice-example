@@ -27,6 +27,11 @@ public class CommonController {
     @Inject
     private Lattice lattice;
 
+    @GetRoute("/")
+    public String index(){
+        return "index.html";
+    }
+
     @GetRoute("login")
     public String login() {
         return "login.html";
