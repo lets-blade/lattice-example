@@ -2,7 +2,6 @@ package io.github.biezhi.lattice.example.controller;
 
 import com.blade.mvc.annotation.GetRoute;
 import com.blade.mvc.annotation.Path;
-import com.blade.mvc.annotation.PathParam;
 import io.github.biezhi.lattice.annotation.Users;
 
 /**
@@ -21,11 +20,6 @@ public class AdminController {
     @GetRoute({"/main.html"})
     public String main() {
         return "main.html";
-    }
-
-    @GetRoute("/:module/:page.html")
-    public String pages(@PathParam String module, @PathParam String page) {
-        return "sys/" + module + "/" + page;
     }
 
 }

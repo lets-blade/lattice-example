@@ -75,7 +75,7 @@ var vm = new Vue({
 		save : function() {
 			dialogOpen({
 				title : '新增用户',
-				url : '/admin/user/add.html?_' + $.now(),
+				url : '/base/user/add.html?_' + $.now(),
                 width : '620px',
                 height : '510px',
 				scroll : true,
@@ -89,7 +89,7 @@ var vm = new Vue({
 			if (checkedRow(ck)) {
 				dialogOpen({
 					title : '编辑用户',
-					url : '/admin/user/edit.html?_' + $.now(),
+					url : '/base/user/edit.html?_' + $.now(),
                     width : '620px',
                     height : '510px',
 					scroll : true,
@@ -155,7 +155,7 @@ var vm = new Vue({
 			if (checkedRow(ck)) {
 				dialogOpen({
 					title : '重置密码',
-					url : '/admin/user/reset.html?_' + $.now(),
+					url : '/base/user/reset.html?_' + $.now(),
 					width : '400px',
 					height : '220px',
 					success : function(iframeId) {

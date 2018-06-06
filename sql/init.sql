@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.22)
 # Database: lattice_example
-# Generation Time: 2018-06-05 15:01:41 +0000
+# Generation Time: 2018-06-06 05:25:21 +0000
 # ************************************************************
 
 
@@ -79,11 +79,11 @@ LOCK TABLES `sys_menus` WRITE;
 INSERT INTO `sys_menus` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `created_time`, `modified_time`)
 VALUES
 	(1,0,'系统管理',NULL,'',0,'fa fa-coffee',0,'2017-08-09 22:49:47','2017-10-26 10:03:40'),
-	(2,1,'系统菜单','/admin/menu/list.html',NULL,1,'fa fa-th-list',1,'2017-08-09 22:55:15','2017-08-17 10:00:12'),
+	(2,1,'系统菜单','/base/menu/list.html',NULL,1,'fa fa-th-list',1,'2017-08-09 22:55:15','2017-08-17 10:00:12'),
 	(3,0,'组织机构',NULL,NULL,0,'fa fa-desktop',1,'2017-08-09 23:06:55','2017-08-17 09:54:28'),
-	(4,1,'通用字典','/admin/macro/list.html',NULL,1,'fa fa-book',2,'2017-08-09 23:06:58','2017-08-17 10:00:24'),
-	(6,3,'用户管理','/admin/user/list.html',NULL,1,'fa fa-user',2,'2017-08-10 14:12:11','2017-08-17 09:57:40'),
-	(7,3,'角色管理','/admin/role/list.html',NULL,1,'fa fa-paw',1,'2017-08-10 14:13:19','2017-08-17 09:57:32'),
+	(4,1,'通用字典','/base/macro/list.html',NULL,1,'fa fa-book',2,'2017-08-09 23:06:58','2017-08-17 10:00:24'),
+	(6,3,'用户管理','/base/user/list.html',NULL,1,'fa fa-user',2,'2017-08-10 14:12:11','2017-08-17 09:57:40'),
+	(7,3,'角色管理','/base/role/list.html',NULL,1,'fa fa-paw',1,'2017-08-10 14:13:19','2017-08-17 09:57:32'),
 	(11,6,'刷新',NULL,'sys:user:list',2,NULL,0,'2017-08-14 10:51:05',NULL),
 	(12,6,'新增',NULL,'sys:user:save',2,NULL,0,'2017-08-14 10:51:35',NULL),
 	(13,6,'编辑',NULL,'sys:user:edit',2,NULL,0,'2017-08-14 10:52:06',NULL),
@@ -100,7 +100,7 @@ VALUES
 	(24,6,'启用',NULL,'sys:user:enable',2,NULL,0,'2017-08-14 17:27:18',NULL),
 	(25,6,'停用',NULL,'sys:user:disable',2,NULL,0,'2017-08-14 17:27:43',NULL),
 	(26,6,'重置密码',NULL,'sys:user:resetPassword',2,NULL,0,'2017-08-14 17:28:34',NULL),
-	(27,1,'系统日志','/admin/syslog/list.html',NULL,1,'fa fa-warning',3,'2017-08-14 22:11:53','2017-08-17 09:55:19'),
+	(27,1,'系统日志','/base/syslog/list.html',NULL,1,'fa fa-warning',3,'2017-08-14 22:11:53','2017-08-17 09:55:19'),
 	(28,27,'刷新',NULL,'sys:log:list',2,NULL,0,'2017-08-14 22:30:22',NULL),
 	(29,27,'删除',NULL,'sys:log:remove',2,NULL,0,'2017-08-14 22:30:43',NULL),
 	(30,27,'清空',NULL,'sys:log:clear',2,NULL,0,'2017-08-14 22:31:02',NULL),

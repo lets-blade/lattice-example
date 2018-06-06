@@ -62,7 +62,7 @@ var vm = new Vue({
 		save: function() {
 			dialogOpen({
 				title: '新增角色',
-				url: '/admin/role/add.html?_' + $.now(),
+				url: '/base/role/add.html?_' + $.now(),
 				width: '420px',
 				height: '350px',
 				yes : function(iframeId) {
@@ -75,7 +75,7 @@ var vm = new Vue({
 			if(checkedRow(ck)){
 				dialogOpen({
 					title: '编辑角色',
-					url: '/admin/role/edit.html?_' + $.now(),
+					url: '/base/role/edit.html?_' + $.now(),
 					width: '420px',
 					height: '350px',
 					success: function(iframeId){
@@ -108,7 +108,7 @@ var vm = new Vue({
 			if(checkedRow(ck)){
 				dialogOpen({
 					title: '操作权限',
-					url: '/admin/role/opt.html?_' + $.now(),
+					url: '/base/role/opt.html?_' + $.now(),
 					scroll : true,
 					width: "300px",
 					height: "450px",
@@ -127,7 +127,7 @@ var vm = new Vue({
 			if(checkedRow(ck)){
 				dialogOpen({
 					title: '数据权限',
-					url: '/admin/role/data.html?_' + $.now(),
+					url: '/base/role/data.html?_' + $.now(),
 					scroll : true,
 					width: "300px",
 					height: "450px",

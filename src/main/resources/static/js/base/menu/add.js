@@ -17,7 +17,7 @@ var vm = new Vue({
 			dialogOpen({
 				id: 'iconSelect',
 				title: '选取图标',
-		        url: '/admin/menu/icon.html?_' + $.now(),
+		        url: '/base/menu/icon.html?_' + $.now(),
 		        scroll : true,
 		        width: "1030px",
 		        height: "600px",
@@ -28,7 +28,7 @@ var vm = new Vue({
 		    dialogOpen({
 				id: 'layerMenuTree',
 				title: '选择菜单',
-		        url: '/admin/menu/tree.html?_' + $.now(),
+		        url: '/base/menu/tree.html?_' + $.now(),
 		        scroll : true,
 		        width: "300px",
 		        height: "450px",

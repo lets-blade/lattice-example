@@ -35,7 +35,7 @@ var vm = new Vue({
 		save: function() {
 			dialogOpen({
 				title: '新增菜单',
-				url: '/admin/menu/add.html?_' + $.now(),
+				url: '/base/menu/add.html?_' + $.now(),
 				width: '600px',
 				height: '420px',
 				scroll : true,
@@ -49,7 +49,7 @@ var vm = new Vue({
 			if(checkedRow(ck)){
 				dialogOpen({
 					title: '编辑菜单',
-					url: '/admin/menu/edit.html?_' + $.now(),
+					url: '/base/menu/edit.html?_' + $.now(),
 					width: '600px',
 					height: '420px',
 					scroll : true,

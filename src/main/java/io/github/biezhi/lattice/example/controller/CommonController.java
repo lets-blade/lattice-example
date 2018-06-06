@@ -1,10 +1,7 @@
 package io.github.biezhi.lattice.example.controller;
 
 import com.blade.ioc.annotation.Inject;
-import com.blade.mvc.annotation.GetRoute;
-import com.blade.mvc.annotation.JSON;
-import com.blade.mvc.annotation.Path;
-import com.blade.mvc.annotation.PostRoute;
+import com.blade.mvc.annotation.*;
 import com.blade.mvc.http.Session;
 import com.blade.mvc.ui.RestResponse;
 import io.github.biezhi.lattice.Constant;
@@ -66,6 +63,11 @@ public class CommonController {
     @GetRoute("unauthorized")
     public String unauthorized() {
         return "error/unauthorized.html";
+    }
+
+    @GetRoute("base/:module/:page.html")
+    public String pages(@PathParam String module, @PathParam String page) {
+        return "sys/" + module + "/" + page;
     }
 
 }
