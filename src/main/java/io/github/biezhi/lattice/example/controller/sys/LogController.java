@@ -32,7 +32,7 @@ public class LogController extends BaseController {
 
     @Permissions("sys:log:list")
     @PostRoute("list")
-    public Page<SysLog> list(LogParam logParam) {
+    public Page<SysLog> list(@BodyParam LogParam logParam) {
         return logService.findLogs(logParam);
     }
 

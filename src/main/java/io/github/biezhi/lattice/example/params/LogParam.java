@@ -1,5 +1,6 @@
 package io.github.biezhi.lattice.example.params;
 
+import com.blade.kit.json.JsonFormat;
 import lombok.Data;
 import lombok.ToString;
 
@@ -14,7 +15,10 @@ import java.time.LocalDate;
 public class LogParam extends PageParam {
 
     private String    username;
+
+    @JsonFormat("yyyy-MM-dd")
     private LocalDate startDate;
+    @JsonFormat("yyyy-MM-dd")
     private LocalDate endDate;
 
 }
