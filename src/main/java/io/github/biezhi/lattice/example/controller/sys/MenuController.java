@@ -7,6 +7,7 @@ import com.blade.mvc.annotation.PostRoute;
 import com.blade.mvc.ui.RestResponse;
 import io.github.biezhi.anima.Anima;
 import io.github.biezhi.lattice.annotation.Users;
+import io.github.biezhi.lattice.example.annotation.SysLog;
 import io.github.biezhi.lattice.example.controller.BaseController;
 import io.github.biezhi.lattice.example.model.SysMenu;
 
@@ -28,6 +29,7 @@ public class MenuController extends BaseController {
         return RestResponse.ok();
     }
 
+    @SysLog("新增菜单")
     @PostRoute("save")
     public RestResponse save(SysMenu sysMenu) {
         sysMenu.setCreatedTime(LocalDateTime.now());
@@ -35,6 +37,7 @@ public class MenuController extends BaseController {
         return RestResponse.ok(sysMenu.save());
     }
 
+    @SysLog("修改菜单")
     @PostRoute("update")
     public RestResponse update(SysMenu sysMenu) {
         sysMenu.setModifiedTime(LocalDateTime.now());
@@ -46,6 +49,7 @@ public class MenuController extends BaseController {
         return select().from(SysMenu.class).all();
     }
 
+    @SysLog("删除菜单")
     @PostRoute("remove")
     public RestResponse remove(@BodyParam List<Long> ids) {
         return RestResponse.ok().peek(() -> Anima.deleteBatch(SysMenu.class, ids));

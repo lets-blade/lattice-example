@@ -8,6 +8,7 @@ import com.blade.validator.Validators;
 import io.github.biezhi.anima.Anima;
 import com.alibaba.druid.pool.DruidDataSource;
 import io.github.biezhi.lattice.Lattice;
+import io.github.biezhi.lattice.example.extensions.Functions;
 
 @Bean
 public class Bootstrap implements BeanProcessor {
@@ -25,7 +26,10 @@ public class Bootstrap implements BeanProcessor {
 
         Validators.useChinese();
 
-        blade.templateEngine(new JetbrickTemplateEngine());
+        JetbrickTemplateEngine templateEngine = new JetbrickTemplateEngine();
+        templateEngine.getGlobalResolver().registerFunctions(Functions.class);
+
+        blade.templateEngine(templateEngine);
 
         // JDBC
         DruidDataSource dataSource = new DruidDataSource();

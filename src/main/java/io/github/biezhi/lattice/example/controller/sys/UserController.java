@@ -8,6 +8,8 @@ import com.blade.mvc.annotation.PostRoute;
 import com.blade.mvc.ui.RestResponse;
 import io.github.biezhi.anima.Anima;
 import io.github.biezhi.anima.page.Page;
+import io.github.biezhi.lattice.annotation.Permissions;
+import io.github.biezhi.lattice.example.annotation.SysLog;
 import io.github.biezhi.lattice.example.controller.BaseController;
 import io.github.biezhi.lattice.example.enums.UserStatus;
 import io.github.biezhi.lattice.example.model.SysUser;
@@ -48,6 +50,8 @@ public class UserController extends BaseController {
         return RestResponse.ok(userService.findUserPerms(this.userId()));
     }
 
+    @SysLog("重置密码")
+    @Permissions("sys:user:resetPassword")
     @PostRoute("updatePwd")
     public RestResponse updatePwd(UpdatePwdParam updatePwdParam) {
         updatePwdParam.setUserId(this.loginUser().getUserId());
@@ -57,6 +61,8 @@ public class UserController extends BaseController {
         return RestResponse.ok();
     }
 
+    @SysLog("新增用户")
+    @Permissions("sys:user:save")
     @PostRoute("save")
     public RestResponse save(SysUser sysUser) {
         sysUser.setCreatedId(this.userId());
@@ -65,22 +71,30 @@ public class UserController extends BaseController {
         return RestResponse.ok(sysUser.save());
     }
 
+    @SysLog("修改用户")
+    @Permissions("sys:user:edit")
     @PostRoute("update")
     public RestResponse update(SysUser sysUser) {
         sysUser.setModifiedTime(LocalDateTime.now());
         return RestResponse.ok(sysUser.update());
     }
 
+    @SysLog("删除用户")
+    @Permissions("sys:user:remove")
     @PostRoute("remove")
     public RestResponse remove(@BodyParam List<Long> ids) {
         return RestResponse.ok().peek(() -> Anima.deleteBatch(SysUser.class, ids));
     }
 
+    @SysLog("禁用用户")
+    @Permissions("sys:user:disable")
     @PostRoute("disable")
     public RestResponse disable(@BodyParam List<Long> ids) {
         return RestResponse.ok().peek(() -> userService.updateStatus(UserStatus.DISABLE, ids));
     }
 
+    @SysLog("启用用户")
+    @Permissions("sys:user:enable")
     @PostRoute("enable")
     public RestResponse enable(@BodyParam List<Long> ids) {
         return RestResponse.ok().peek(() -> userService.updateStatus(UserStatus.NORMAL, ids));

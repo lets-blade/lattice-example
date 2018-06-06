@@ -34,11 +34,13 @@ public class LogController extends BaseController {
         return logService.findLogs(logParam);
     }
 
+    @io.github.biezhi.lattice.example.annotation.SysLog("删除日志")
     @PostRoute("remove")
     public RestResponse remove(@BodyParam List<Long> ids) {
         return RestResponse.ok().peek(() -> Anima.deleteBatch(SysLog.class, ids));
     }
 
+    @io.github.biezhi.lattice.example.annotation.SysLog("清空日志")
     @PostRoute("clean")
     public RestResponse clean() {
         return RestResponse.ok(delete().from(SysLog.class).execute());
