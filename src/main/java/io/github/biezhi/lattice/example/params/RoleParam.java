@@ -1,16 +1,13 @@
 package io.github.biezhi.lattice.example.params;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-/**
- * @author biezhi
- * @date 2018/6/5
- */
 @Data
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class RoleParam extends PageParam {
 
-    private String    roleName;
+    private String roleName;
 
 }
