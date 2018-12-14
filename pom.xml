@@ -12,7 +12,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <blade-mvc.version>2.0.8-SNAPSHOT</blade-mvc.version>
+        <blade-mvc.version>2.0.13.ALPHA</blade-mvc.version>
         <junit.version>4.12</junit.version>
         <unirest-java.version>1.4.9</unirest-java.version>
     </properties>
@@ -47,7 +47,7 @@
 		<dependency>
             <groupId>io.github.biezhi</groupId>
             <artifactId>anima</artifactId>
-            <version>0.2.3-SNAPSHOT</version>
+            <version>0.2.5</version>
 		</dependency>
 		<dependency>
             <groupId>com.alibaba</groupId>

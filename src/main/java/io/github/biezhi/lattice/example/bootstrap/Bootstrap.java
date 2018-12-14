@@ -1,20 +1,20 @@
 package io.github.biezhi.lattice.example.bootstrap;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.blade.Blade;
-import com.blade.event.BeanProcessor;
 import com.blade.ioc.annotation.Bean;
+import com.blade.loader.BladeLoader;
 import com.blade.mvc.view.template.JetbrickTemplateEngine;
 import com.blade.validator.Validators;
 import io.github.biezhi.anima.Anima;
-import com.alibaba.druid.pool.DruidDataSource;
 import io.github.biezhi.lattice.Lattice;
 import io.github.biezhi.lattice.example.extensions.Functions;
 
 @Bean
-public class Bootstrap implements BeanProcessor {
+public class Bootstrap implements BladeLoader {
 
     @Override
-    public void preHandle(Blade blade) {
+    public void preLoad(Blade blade) {
         Lattice lattice = new Lattice();
         lattice.loginUrl("/login").unauthorizedUrl("/unauthorized");
 
@@ -22,7 +22,7 @@ public class Bootstrap implements BeanProcessor {
     }
 
     @Override
-    public void processor(Blade blade) {
+    public void load(Blade blade) {
 
         Validators.useChinese();
 
